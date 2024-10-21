@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./movie-booking
+      dockerfile: Dockerfile 
+    depends_on:
+      - db
+    environment:
+      - ENV=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mbs
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Aboard$789
+    volumes:
+      - ./movie-booking:/movie-booking
+    ports:
+      - "8080:8080"  
+    restart: unless-stopped
+    networks:
+      - lumos
+
+  ui:
+    build:
+      context: ./mbs-frontend
+      dockerfile: Dockerfile 
+    depends_on:
+      - api
+    volumes:
+      - ./mbs-frontend:/mbs-frontend
+    command: bash -c "npm install -g npm@10.5.1 && npm install && ng serve --host 0.0.0.0 --poll=2000"
+    ports:
+      - "4350:4350" 
+    restart: unless-stopped
+    networks:
+      - lumos
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Aboard$789
+      POSTGRES_DB: mbs
+    ports:
+      - "5432:5432"
+    networks:
+      - lumos
+
+volumes:
+  mongodb_data_volume:
+
+networks:
+  lumos:
+    driver: bridge
