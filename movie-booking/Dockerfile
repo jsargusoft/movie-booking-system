@@ -9,11 +9,13 @@ COPY src ./src
 RUN apt-get update && apt-get install -y maven && apt-get clean && \
     mvn package -DskipTests
 
-RUN ls -l target
 
-ADD target/*.jar app.jar
+COPY /target/movie-booking-0.0.1-SNAPSHOT.jar /app.jar
 
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+
+# movie-booking-0.0.1-SNAPSHOT.jar

@@ -2,15 +2,9 @@ FROM node:20
 
 WORKDIR /mbs-frontend
 
-COPY package*.json ./
-
-COPY . .
+COPY . /mbs-frontend
 
 RUN npm install -g @angular/cli
-
-RUN npm install
-
-RUN npm run build 
 
 EXPOSE 4350
 

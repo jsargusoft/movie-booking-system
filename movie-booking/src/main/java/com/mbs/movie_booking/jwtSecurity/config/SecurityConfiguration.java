@@ -48,7 +48,7 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4350"));
+                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
                     // configuration.setAllowedOrigins(Collections.singletonList("http://172.20.0.4:4350"));
 
                     configuration.setAllowedMethods(Collections.singletonList("*"));
