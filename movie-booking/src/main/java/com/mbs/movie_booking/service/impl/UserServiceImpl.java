@@ -1,5 +1,7 @@
 package com.mbs.movie_booking.service.impl;
 
+import java.util.List;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
+    public List<User> findAll() {
+        try {
+            return userRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching users", e);
+        }
+    }
+    
     public void registerUser(UserRegisterInfo userRegisterInfo) {
         if (userRepository.findByEmail(userRegisterInfo.getEmail()).isPresent()) {
             throw new RuntimeException("User already exists");

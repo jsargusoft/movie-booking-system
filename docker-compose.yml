@@ -30,7 +30,7 @@ services:
       - ./mbs-frontend:/mbs-frontend
     command: bash -c "npm install -g npm@10.5.1 && npm install && ng serve --host 0.0.0.0 --poll=2000"
     ports:
-      - "4350:4350" 
+      - "4200:4200" 
     restart: unless-stopped
     networks:
       - lumos

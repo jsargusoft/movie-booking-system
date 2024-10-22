@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -49,7 +50,7 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
                     configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-                    // configuration.setAllowedOrigins(Collections.singletonList("http://172.20.0.4:4350"));
+                    // configuration.setAllowedOrigins(Collections.singletonList("http://172.20.0.4:4200"));
 
                     configuration.setAllowedMethods(Collections.singletonList("*"));
                     configuration.setAllowCredentials(true);
@@ -62,7 +63,9 @@ public class SecurityConfiguration {
                     authorize.requestMatchers(ALLOWED_URLS).permitAll();
                     authorize.requestMatchers("/api/auth/login").permitAll();
                     authorize.requestMatchers("/api/register").permitAll();
+                    authorize.requestMatchers("/api/users").permitAll();
                     authorize.requestMatchers("/api/auth/refresh").permitAll();
+                    authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
                     authorize.anyRequest().authenticated();
                 });
