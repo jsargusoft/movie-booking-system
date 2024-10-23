@@ -1,20 +1,24 @@
-FROM openjdk:21-jdk-slim
+FROM openjdk:22-slim AS build
 
+RUN apt-get update && \
+    apt-get install -y maven && \
+    rm -rf /var/lib/apt/lists/*
 
-WORKDIR /movie-booking
+WORKDIR /app
 
 COPY pom.xml .
+RUN mvn dependency:go-offline
+
 COPY src ./src
-
-RUN apt-get update && apt-get install -y maven && apt-get clean && \
-    mvn package -DskipTests
+RUN mvn clean package -DskipTests
 
 
-COPY /target/movie-booking-0.0.1-SNAPSHOT.jar /app.jar
+FROM openjdk:22-slim
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar api.jar 
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
-
-
-# movie-booking-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "api.jar"]

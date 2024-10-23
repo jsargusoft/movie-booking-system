@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   api:
     build:
@@ -42,7 +40,7 @@ services:
       POSTGRES_PASSWORD: Aboard$789
       POSTGRES_DB: mbs
     ports:
-      - "5432:5432"
+      - "8081:5432"
     networks:
       - lumos
 
