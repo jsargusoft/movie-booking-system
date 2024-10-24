@@ -2049,8 +2049,12 @@ body {
     font-weight: 500;
     color: #4C4A70;
 }
-
+.position-relative {
+    position: relative; /* Ensure position relative for positioning icons */
+}
 .form-control {
+    width: 80%; 
+    padding-right: 40px;
     background: #f6f7fd !important;
     border: 1px solid #f6f7fd !important;
     color: #7d8ca3;

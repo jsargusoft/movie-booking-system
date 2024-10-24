@@ -1,5 +1,6 @@
 package com.mbs.movie_booking.jwtSecurity.config;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
@@ -49,8 +50,10 @@ public class SecurityConfiguration {
         http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-                    // configuration.setAllowedOrigins(Collections.singletonList("http://172.20.0.4:4200"));
+                    configuration.setAllowedOrigins(Arrays.asList(
+                            "http://localhost:4200",
+                            "http://172.19.0.4:4200"));
+
 
                     configuration.setAllowedMethods(Collections.singletonList("*"));
                     configuration.setAllowCredentials(true);
