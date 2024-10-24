@@ -6,8 +6,9 @@
 /out-tsc
 /bazel-out
 
-# Node
-/node_modules
+# Node (frontend and backend)
+mbs-frontend/node_modules/
+movie-booking/node_modules/
 npm-debug.log
 yarn-error.log
 
@@ -29,7 +30,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+/mbs-frontend/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
@@ -40,3 +41,29 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Maven (for backend)
+movie-booking/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# STS (for backend)
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+# IntelliJ IDEA (for backend)
+*.iws
+*.iml
+*.ipr
+
+# NetBeans (for backend)
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
