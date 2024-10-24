@@ -39,13 +39,15 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Aboard$789
       POSTGRES_DB: mbs
+    volumes:
+      - db_data_volume:/var/lib/postgresql/data 
     ports:
       - "8081:5432"
     networks:
       - lumos
 
 volumes:
-  mongodb_data_volume:
+ db_data_volume:
 
 networks:
   lumos:
