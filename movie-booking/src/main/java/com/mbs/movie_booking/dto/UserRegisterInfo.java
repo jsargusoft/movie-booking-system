@@ -21,7 +21,8 @@ public class UserRegisterInfo {
     private String email;
 
     @NotNull
-    @Size(min = 10, max = 10, message = "Phone number must contain 10 digits")
+    @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
+    @Pattern(regexp = "^[0-9]$", message = "Phone number must contain only digits")
     private String phone;
 }
 

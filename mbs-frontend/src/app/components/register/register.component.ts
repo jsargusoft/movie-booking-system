@@ -34,7 +34,7 @@ export class RegisterComponent {
       name: ['', [Validators.required, noWhitespaceValidator('Name',1,30)]], 
       username:['', [Validators.required, noWhitespaceValidator('Username',1,30)]],
       email: ['', [Validators.required, customEmailValidator(), noWhitespaceValidator('Email',5,30)]],
-      phone: ['', [Validators.required, noWhitespaceValidator('Phone number',10,10)]], 
+      phone: ['', [Validators.required, noWhitespaceValidator('Phone number',10,10),Validators.pattern('^[0-9]*$')]], 
 
       password: ['', [
         Validators.required,
