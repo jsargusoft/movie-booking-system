@@ -1,7 +1,11 @@
 package com.mbs.movie_booking.dto;
 
-import jakarta.validation.constraints.*;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -22,7 +26,7 @@ public class UserRegisterInfo {
 
     @NotNull
     @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
-    @Pattern(regexp = "^[0-9]$", message = "Phone number must contain only digits")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must contain only digits")
     private String phone;
 }
 

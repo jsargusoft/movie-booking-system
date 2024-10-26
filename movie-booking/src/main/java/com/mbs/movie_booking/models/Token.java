@@ -30,4 +30,8 @@ public class Token {
     private boolean disabled;
     @ManyToOne
     private User user;
+
+    public boolean isValid() {
+        return !disabled && LocalDateTime.now().isBefore(expiryDate);
+    }
 }
