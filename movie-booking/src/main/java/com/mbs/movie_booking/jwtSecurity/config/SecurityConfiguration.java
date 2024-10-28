@@ -68,6 +68,8 @@ public class SecurityConfiguration {
                     authorize.requestMatchers("/api/register").permitAll();
                     authorize.requestMatchers("/api/users").permitAll();
                     authorize.requestMatchers("/api/auth/refresh").permitAll();
+                    authorize.requestMatchers("/api/auth/reset-request").permitAll();
+                    authorize.requestMatchers("/sendEmail").permitAll();
                     authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
                     authorize.anyRequest().authenticated();
