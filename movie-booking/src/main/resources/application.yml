@@ -10,7 +10,7 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         jdbc:
@@ -31,7 +31,21 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
       mail.smtp.starttls.required: true
-
+  security:
+    oauth2:
+        client:
+          registration:
+            google: 
+              client-id: 19074656725-hpb36tjda8ice7d2jm35vq00nsk9rffo.apps.googleusercontent.com
+              client-secret: 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
+              redirect_uri: http://localhost:8080/login/oauth2/code/google
+              # scope: openid,profile,email
+          provider:
+            google:
+              authorization-uri: https://accounts.google.com/o/oauth2/auth
+              token-uri: https://oauth2.googleapis.com/token
+              user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+              user-name-attribute: sub
 server:
   port: ${SERVER_PORT:8080}
 
@@ -48,3 +62,7 @@ jwt:
       day: ${JWT_REFRESH_TOKEN_DURATION_DAY}
       second: ${JWT_REFRESH_TOKEN_DURATION_SECOND}
     cookie-name: ${JWT_REFRESH_COOKIE_NAME}
+
+logging:
+  level:
+    org.springframework.security: DEBUG

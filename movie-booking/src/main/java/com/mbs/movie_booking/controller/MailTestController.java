@@ -1,6 +1,7 @@
 package com.mbs.movie_booking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,11 @@ import com.mbs.movie_booking.service.MailService;
 public class MailTestController {
 @Autowired
     private MailService mailService; 
+
+    @GetMapping("/")
+    public String greet() {
+        return "Welcome";
+    }
    
     @PostMapping("/sendEmail")
     public String sendTestEmail(@RequestBody EmailRequest emailRequest) {

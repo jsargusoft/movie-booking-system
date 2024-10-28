@@ -7,16 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import com.mbs.movie_booking.jwtSecurity.jwt.JwtAuthEntryPoint;
@@ -46,38 +45,34 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable);
-        http
-                .cors(cors -> cors.configurationSource(request -> {
-                    CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(Arrays.asList(
-                            "http://localhost:4200",
-                            "http://172.19.0.4:4200"));
-
-
-                    configuration.setAllowedMethods(Collections.singletonList("*"));
-                    configuration.setAllowCredentials(true);
-                    configuration.setAllowedHeaders(Collections.singletonList("*"));
-                    configuration.setMaxAge(3600L);
-                    return configuration;
-                }));
-        http
-                .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers(ALLOWED_URLS).permitAll();
-                    authorize.requestMatchers("/api/auth/login").permitAll();
-                    authorize.requestMatchers("/api/register").permitAll();
-                    authorize.requestMatchers("/api/users").permitAll();
-                    authorize.requestMatchers("/api/auth/refresh").permitAll();
-                    authorize.requestMatchers("/api/auth/reset-request").permitAll();
-                    authorize.requestMatchers("/sendEmail").permitAll();
-                    authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
-
-                    authorize.anyRequest().authenticated();
-                });
-        http
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Arrays.asList(
+                        "http://localhost:4200",
+                        "http://172.19.0.4:4200"));
+                configuration.setAllowedMethods(Collections.singletonList("*"));
+                configuration.setAllowCredentials(true);
+                configuration.setAllowedHeaders(Collections.singletonList("*"));
+                configuration.setMaxAge(3600L);
+                return configuration;
+            }))
+            .authorizeHttpRequests(authorize -> {
+                authorize.requestMatchers(ALLOWED_URLS).permitAll();
+                authorize.requestMatchers("/api/auth/login").permitAll();
+                authorize.requestMatchers("/api/register").permitAll();
+                authorize.requestMatchers("/api/users").permitAll();
+                authorize.requestMatchers("/api/auth/refresh").permitAll();
+                authorize.requestMatchers("/api/auth/reset-request").permitAll();
+                authorize.requestMatchers("/sendEmail").permitAll();
+                authorize.requestMatchers("/login/oauth2/**").permitAll(); // Ensure this is included
+                authorize.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+                authorize.anyRequest().authenticated();     
+            })
+            .oauth2Login(Customizer.withDefaults())
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint));
+            // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        
         return http.build();
     }
 
