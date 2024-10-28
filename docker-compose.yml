@@ -43,9 +43,11 @@ services:
       - "8081:5432"
     networks:
       - lumos
+    volumes:
+      - db_data:/var/lib/postgresql/data
 
 volumes:
-  mongodb_data_volume:
+  db_data:
 
 networks:
   lumos:

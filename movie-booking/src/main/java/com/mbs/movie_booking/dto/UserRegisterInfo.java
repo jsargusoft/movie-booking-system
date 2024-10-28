@@ -17,12 +17,11 @@ public class UserRegisterInfo {
     private String password;
 
     @NotEmpty(message = "Email is required.")
-    @Email(message = "Invalid email format")
+    @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Invalid email format")
     private String email;
 
     @NotNull
     @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
-    @Pattern(regexp = "^[0-9]$", message = "Phone number must contain only digits")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must contain only digits")
     private String phone;
 }
-
